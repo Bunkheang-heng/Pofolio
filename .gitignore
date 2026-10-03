@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.local
+.vite
+.qodo
+.env
+.env.*
+public/assets/resume_bunkheangheng (1).pdf
