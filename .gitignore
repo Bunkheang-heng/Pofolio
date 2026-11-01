@@ -7,3 +7,4 @@ dist
 .env
 .env.*
 public/assets/resume_bunkheangheng (1).pdf
+.vercel
