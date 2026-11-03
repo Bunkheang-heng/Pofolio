@@ -5,6 +5,7 @@ import {
   modes,
   moreProjects,
 } from "./data/githubProjects";
+import { certificateImage, certificates, resumeUrl } from "./data/certificates";
 
 const schools = [
   {
@@ -199,6 +200,18 @@ const kicker = "font-dial text-[10px] tracking-[0.32em] text-white/70 uppercase"
 const title =
   "mt-1 font-display text-[clamp(3.2rem,6.4vw,6.2rem)] font-extrabold uppercase leading-[0.82] text-white";
 
+function ResumeLink({ className = "" }) {
+  return (
+    <a
+      className={`inline-flex border border-white/30 px-4 py-2 font-dial text-[11px] tracking-[0.18em] text-white uppercase ${className}`}
+      href={resumeUrl}
+      download="Bun-Kheang-Heng-Resume.pdf"
+    >
+      Download resume
+    </a>
+  );
+}
+
 function RowLink({ project }) {
   return (
     <a
@@ -226,6 +239,7 @@ export default function App() {
     portraitRef,
     aboutRef,
     eduRef,
+    credsRef,
     xpRef,
     workRef,
     labRef,
@@ -286,13 +300,16 @@ export default function App() {
             <p className="mt-4 max-w-[16rem] text-lg leading-snug text-white/80 max-[1199px]:hidden">
               23. Phnom Penh. Builds software by day and trades with a plan.
             </p>
-            <button
-              type="button"
-              className="mt-6 font-dial text-[11px] tracking-[0.22em] text-white uppercase"
-              onClick={() => jumpTo("about")}
-            >
-              Scroll to transform ↓
-            </button>
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                className="font-dial text-[11px] tracking-[0.22em] text-white uppercase"
+                onClick={() => jumpTo("about")}
+              >
+                Scroll to transform ↓
+              </button>
+              <ResumeLink />
+            </div>
             <div className="mt-5 flex flex-wrap gap-2 min-[1200px]:hidden">
               {["REACT", "OB", "SWEEP", "FVG", "XAUUSD"].map((chip) => (
                 <span
@@ -364,6 +381,47 @@ export default function App() {
                     </p>
                   </div>
                 </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="phase absolute inset-0 z-10" ref={credsRef}>
+          <div className={`${leftCol} max-[1199px]:hidden`}>
+            <p className={kicker}>Credentials</p>
+            <h2 className="m-0 mt-1 font-display text-[clamp(2.6rem,4.4vw,4.2rem)] font-extrabold uppercase leading-[0.85] text-white">
+              Resume.
+            </h2>
+            <p className="mt-4 max-w-[16rem] text-lg leading-snug text-white/80">
+              One file with the degrees, work, and security training.
+            </p>
+            <ResumeLink className="mt-6" />
+          </div>
+          <div className={`${rightCol} min-[1200px]:max-h-[72vh] min-[1200px]:overflow-y-auto`}>
+            <p className={kicker}>Certificates</p>
+            <h2 className={`${title} min-[1200px]:text-[clamp(2.4rem,3.6vw,3.6rem)]`}>
+              Tech
+              <br />
+              papers.
+            </h2>
+            <div className="mt-4 min-[1200px]:hidden">
+              <ResumeLink />
+            </div>
+            <div className="mt-4 grid gap-5">
+              {certificates.map((cert) => (
+                <figure key={cert.file} className="m-0">
+                  <img
+                    className="w-full border border-white/15 bg-white"
+                    src={certificateImage(cert.file)}
+                    alt={cert.name}
+                  />
+                  <figcaption className="mt-2">
+                    <strong className="block text-[1.02rem] font-semibold text-white">
+                      {cert.name}
+                    </strong>
+                    <span className="text-sm text-white/65">{cert.note}</span>
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </div>
@@ -487,6 +545,7 @@ export default function App() {
             time.
           </h2>
           <div className="mt-6 flex flex-col items-center gap-2 text-lg text-white">
+            <ResumeLink />
             <a href="mailto:bunkheangheng99@gmail.com">bunkheangheng99@gmail.com</a>
             <a href="tel:+855973556059">097-355-6059</a>
             <a href={githubStats.profile} target="_blank" rel="noreferrer">
@@ -496,7 +555,7 @@ export default function App() {
         </section>
 
         <nav
-          className="absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 gap-1"
+          className="absolute bottom-6 left-1/2 z-30 flex max-w-[calc(100vw-12px)] -translate-x-1/2 gap-1 overflow-x-auto"
           aria-label="Sections"
         >
           {modes.map((m) => {
@@ -505,7 +564,7 @@ export default function App() {
               <button
                 key={m.key}
                 type="button"
-                className="flex w-11 flex-col items-center gap-1.5"
+                className="flex w-10 shrink-0 flex-col items-center gap-1.5"
                 onClick={() => jumpTo(m.key)}
                 title={m.label}
               >

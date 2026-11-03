@@ -16,22 +16,24 @@ function setPhase(el, amount) {
 }
 
 const CHAPTERS = [
-  { key: "about", enter: 0.05, hold: 0.09, end: 0.17, exit: 0.21 },
-  { key: "edu", enter: 0.19, hold: 0.23, end: 0.33, exit: 0.37 },
-  { key: "xp", enter: 0.35, hold: 0.39, end: 0.49, exit: 0.53 },
-  { key: "work", enter: 0.51, hold: 0.55, end: 0.67, exit: 0.71 },
-  { key: "lab", enter: 0.69, hold: 0.73, end: 0.83, exit: 0.87 },
-  { key: "trading", enter: 0.85, hold: 0.89, end: 0.95, exit: 0.97 },
+  { key: "about", enter: 0.04, hold: 0.07, end: 0.13, exit: 0.16 },
+  { key: "edu", enter: 0.15, hold: 0.18, end: 0.24, exit: 0.27 },
+  { key: "creds", enter: 0.26, hold: 0.29, end: 0.36, exit: 0.39 },
+  { key: "xp", enter: 0.38, hold: 0.41, end: 0.48, exit: 0.51 },
+  { key: "work", enter: 0.5, hold: 0.53, end: 0.6, exit: 0.63 },
+  { key: "lab", enter: 0.62, hold: 0.65, end: 0.73, exit: 0.76 },
+  { key: "trading", enter: 0.75, hold: 0.78, end: 0.88, exit: 0.91 },
 ];
 
 const JUMP = {
   hero: 0,
-  about: 0.12,
-  edu: 0.27,
-  xp: 0.42,
-  work: 0.58,
-  lab: 0.76,
-  trading: 0.91,
+  about: 0.1,
+  edu: 0.21,
+  creds: 0.32,
+  xp: 0.44,
+  work: 0.56,
+  lab: 0.68,
+  trading: 0.82,
   contact: 0.99,
 };
 
@@ -41,6 +43,7 @@ export function useScrollStory() {
   const portraitRef = useRef(null);
   const aboutRef = useRef(null);
   const eduRef = useRef(null);
+  const credsRef = useRef(null);
   const xpRef = useRef(null);
   const workRef = useRef(null);
   const labRef = useRef(null);
@@ -63,6 +66,7 @@ export function useScrollStory() {
     const phases = {
       about: aboutRef,
       edu: eduRef,
+      creds: credsRef,
       xp: xpRef,
       work: workRef,
       lab: labRef,
@@ -101,7 +105,7 @@ export function useScrollStory() {
         if (a > 0.28) next = c.key;
       }
 
-      const contact = range(p, 0.96, 0.99);
+      const contact = range(p, 0.93, 0.98);
       if (contactRef.current) {
         contactRef.current.style.opacity = String(contact);
         contactRef.current.style.transform = `translateY(${(18 * (1 - contact)).toFixed(1)}px)`;
@@ -140,6 +144,7 @@ export function useScrollStory() {
     portraitRef,
     aboutRef,
     eduRef,
+    credsRef,
     xpRef,
     workRef,
     labRef,
