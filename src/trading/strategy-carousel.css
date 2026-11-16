@@ -1,0 +1,227 @@
+.strategy-carousel {
+  display: flex;
+  flex-direction: column;
+}
+
+.strategy-carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.strategy-carousel-transport {
+  display: flex;
+  gap: 8px;
+}
+
+.strategy-carousel-transport button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid #ffffff35;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--trade-text);
+  font-size: 20px;
+  transition: background .2s, border-color .2s;
+}
+
+.strategy-carousel-transport button:hover {
+  border-color: var(--trade-lime);
+  background: #c6f36b12;
+}
+
+.strategy-carousel-transport .strategy-autoplay {
+  width: auto;
+  min-width: 95px;
+  padding: 0 16px;
+  border-color: var(--trade-lime);
+  background: var(--trade-lime);
+  color: var(--trade-bg);
+  font-size: 12px;
+}
+
+.strategy-carousel-transport .strategy-autoplay:hover {
+  background: #d7ff8c;
+}
+
+.strategy-carousel-position {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.strategy-carousel-position > span {
+  flex-shrink: 0;
+  font-family: var(--trade-mono);
+  font-size: 9px;
+  color: var(--trade-muted);
+}
+
+.strategy-carousel-speed select {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #ffffff35;
+  border-radius: 4px;
+  background: var(--trade-surface);
+  color: var(--trade-text);
+  color-scheme: dark;
+  font-family: var(--trade-mono);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.strategy-carousel .strategy-navigation {
+  border: 0;
+  padding-bottom: 22px;
+}
+
+.strategy-carousel .strategy-navigation a[aria-current="true"] {
+  border-color: var(--trade-lime);
+  background: #c6f36b0c;
+  color: var(--trade-lime);
+}
+
+.strategy-carousel-progress {
+  height: 2px;
+  overflow: hidden;
+  background: #ffffff20;
+}
+
+.strategy-carousel-progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--trade-lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: strategy-autoplay-progress linear both;
+}
+
+.strategy-carousel-panels {
+  display: grid;
+}
+
+.strategy-carousel-panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.strategy-carousel-panel.is-active {
+  visibility: visible;
+  pointer-events: auto;
+  animation: strategy-slide-enter .4s ease both;
+}
+
+.strategy-carousel .strategy-section,
+.strategy-carousel .strategy-section:last-child {
+  height: 100%;
+  padding: 40px 0;
+  border: 0;
+}
+
+.strategy-carousel-hint {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--trade-line);
+  font-family: var(--trade-mono);
+  font-size: 8px;
+  line-height: 1.7;
+  color: var(--trade-muted);
+}
+
+@keyframes strategy-autoplay-progress {
+  to { transform: scaleX(1); }
+}
+
+@keyframes strategy-slide-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+  .strategy-carousel-position {
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .strategy-carousel .strategy-section {
+    align-content: start;
+  }
+}
+
+@media (max-width: 560px) {
+  .strategy-carousel-controls {
+    flex-wrap: wrap;
+    gap: 18px 12px;
+  }
+
+  .strategy-carousel-position {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .strategy-carousel-speed {
+    margin-left: auto;
+  }
+
+  .strategy-carousel .strategy-navigation {
+    gap: 7px;
+  }
+
+  .strategy-carousel .strategy-navigation a {
+    font-size: 10px;
+    padding: 10px 12px;
+  }
+
+  .strategy-carousel-hint {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strategy-carousel-panel.is-active {
+    animation: none;
+  }
+
+  .strategy-carousel-progress > span {
+    animation: none;
+    transform: scaleX(1);
+  }
+
+  .strategy-carousel-transport button {
+    transition: none;
+  }
+}
+
+@media print {
+  .strategy-carousel-controls,
+  .strategy-carousel .strategy-navigation,
+  .strategy-carousel-progress,
+  .strategy-carousel-hint {
+    display: none;
+  }
+
+  .strategy-carousel-panels {
+    display: block;
+  }
+
+  .strategy-carousel-panel {
+    visibility: visible;
+    break-inside: avoid;
+  }
+}

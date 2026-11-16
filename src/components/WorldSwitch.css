@@ -1,0 +1,102 @@
+.world-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 4%;
+  border-bottom: 1px solid #000;
+  background: #f4f4f0;
+  color: #000;
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+.world-bar > p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.world-bar > p > span {
+  font-weight: 400;
+}
+
+.world-switch {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #000;
+  border-radius: 100px;
+}
+
+.world-switch a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border-radius: 100px;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: background .2s, color .2s;
+}
+
+.world-switch a:hover {
+  background: #00000012;
+}
+
+.world-switch a[aria-current="page"] {
+  background: #000;
+  color: #fff;
+}
+
+.world-switch a > span {
+  font-size: 13px;
+}
+
+.world-bar-trading {
+  border-color: #ffffff1f;
+  background: #101411;
+  color: #b2b8ae;
+}
+
+.world-bar-trading .world-switch {
+  border-color: #ffffff2b;
+}
+
+.world-bar-trading .world-switch a:hover {
+  background: #ffffff12;
+  color: #fff;
+}
+
+.world-bar-trading .world-switch a[aria-current="page"] {
+  background: #c6f36b;
+  color: #101411;
+}
+
+@media (max-width: 480px) {
+  .world-bar {
+    padding: 9px 5%;
+    gap: 8px;
+  }
+  .world-bar > p {
+    font-size: 10px;
+  }
+  .world-bar > p > span {
+    display: none;
+  }
+  .world-switch a {
+    padding: 8px 11px;
+    font-size: 10px;
+    gap: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-switch a {
+    transition: none;
+  }
+}

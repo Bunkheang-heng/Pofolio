@@ -6,5 +6,6 @@ dist
 .qodo
 .env
 .env.*
+!.env.example
 public/assets/resume_bunkheangheng (1).pdf
 .vercel
