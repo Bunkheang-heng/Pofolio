@@ -2,7 +2,6 @@ import { useState } from "react";
 import WorldSwitch from "../components/WorldSwitch";
 import { githubStats, moreProjects } from "../data/githubProjects";
 import { plays, pairs } from "../data/trading";
-import MarketStudy from "./MarketStudy";
 import { StrategySections, DevelopmentSection } from "./StrategySections";
 
 const tradingProjects = moreProjects.filter((project) => project.tag === "Fx");
@@ -85,24 +84,37 @@ export default function TradingPortfolio() {
         <section className="trade-hero trade-section" id="trading-home" aria-labelledby="trading-hero-title">
           <div className="trade-hero-copy"><p className="trade-eyebrow"><span className="trade-dot" /> THE OTHER SIDE OF BUN KHEANG HENG</p><h1 id="trading-hero-title">Trade<br />the <span>plan.</span></h1><p className="trade-hero-lead">Trader & strategy developer.<br />EA, indicator & tool developer.</p><p className="trade-hero-intro">I trade, develop strategies, and build Expert Advisors, custom indicators, and trading tools. My work connects price-action frameworks, systematic rules, and code.</p><div className="trade-hero-actions"><a className="trade-button" href="#trading-projects">Explore my trading work <ExternalArrow /></a><a className="trade-secondary-link" href="#strategies">Explore my strategies <span aria-hidden="true">↓</span></a></div><div className="trade-hero-signature"><span aria-hidden="true">BKH.</span><p>Bun Kheang Heng<small>EA, indicator & strategy developer · Phnom Penh, KH</small></p></div></div>
           <div className="trade-hero-chart">
-            <figure className="trade-trader-card">
+            <figure className="trade-trader-card trade-trader-card-hero">
+              <div className="trader-card-topbar">
+                <span className="trader-status-pill">
+                  <span className="trader-live-dot" aria-hidden="true" />
+                  ACTIVE TRADER & EA DEVELOPER
+                </span>
+                <span className="trader-id-tag">BEN10_FX // KH</span>
+              </div>
               <div className="trade-trader-photo">
                 <img
-                  src="/images/me-face.png"
-                  alt="Bun Kheang Heng"
-                  width="437"
-                  height="360"
+                  src="/images/me.png"
+                  alt="Bun Kheang Heng — Trader & Strategy Developer"
+                  width="1024"
+                  height="1536"
                   fetchPriority="high"
                 />
               </div>
               <figcaption>
-                <span className="trade-eyebrow">TRADER & STRATEGY DEVELOPER</span>
-                <strong>Bun Kheang Heng</strong>
-                <span className="trade-trader-location">EA & indicator developer · Phnom Penh, KH</span>
+                <div className="figcaption-main">
+                  <span className="trade-eyebrow">TRADER & STRATEGY DEVELOPER</span>
+                  <strong>Bun Kheang Heng</strong>
+                  <span className="trade-trader-location">EA, Indicator & Strategy Architect · Phnom Penh, Cambodia</span>
+                </div>
+                <div className="trader-card-badges">
+                  <span>MQL5</span>
+                  <span>PYTHON</span>
+                  <span>PRICE ACTION</span>
+                </div>
+                <span className="trade-trader-mark" aria-hidden="true">↗</span>
               </figcaption>
-              <span className="trade-trader-mark" aria-hidden="true">↗</span>
             </figure>
-            <MarketStudy />
           </div>
         </section>
 

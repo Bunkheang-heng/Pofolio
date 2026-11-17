@@ -12,12 +12,43 @@ export default function StrategyCarousel({ slides }) {
   const [inView, setInView] = useState(false);
   const [pageHidden, setPageHidden] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [isBrowserFullscreen, setIsBrowserFullscreen] = useState(false);
+
   const rootRef = useRef(null);
   const slidesRef = useRef(slides);
   const remainingRef = useRef(duration);
   const touchRef = useRef(null);
   const running = playing && inView && !pageHidden && !hovered;
   slidesRef.current = slides;
+
+  const toggleBrowserFullscreen = () => {
+    if (!document.fullscreenElement) {
+      const el = rootRef.current?.closest(".master-strategies") || document.documentElement;
+      if (el.requestFullscreen) {
+        el.requestFullscreen().catch(() => {});
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleFs = () => {
+      setIsBrowserFullscreen(Boolean(document.fullscreenElement || document.webkitFullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", handleFs);
+    document.addEventListener("webkitfullscreenchange", handleFs);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFs);
+      document.removeEventListener("webkitfullscreenchange", handleFs);
+    };
+  }, []);
 
   const navigate = useCallback((index, automatic = false) => {
     const next = wrapSlideIndex(index, slidesRef.current.length);
@@ -80,12 +111,15 @@ export default function StrategyCarousel({ slides }) {
     } else if (event.key === "Home" || event.key === "End") {
       event.preventDefault();
       navigate(event.key === "Home" ? 0 : slides.length - 1);
+    } else if (event.key === " " && !event.target.closest("button, a")) {
+      event.preventDefault();
+      setPlaying((current) => !current);
     }
   }
 
   function onPointerDown(event) {
     if (event.target.closest(".strategy-autoplay")) return;
-    if (!event.target.closest(".strategy-carousel-controls")) setPlaying(false);
+    if (!event.target.closest(".strategy-nav-buttons")) setPlaying(false);
     touchRef.current = event.pointerType === "touch" && !event.target.closest("a, button, select")
       ? { x: event.clientX, y: event.clientY }
       : null;
@@ -101,24 +135,135 @@ export default function StrategyCarousel({ slides }) {
   }
 
   return (
-    <div className="strategy-carousel" ref={rootRef} role="region" aria-roledescription="carousel" aria-label="Strategy frameworks" onKeyDown={onKeyDown} onFocusCapture={() => setPlaying(false)} onPointerDownCapture={onPointerDown} onPointerUpCapture={onPointerUp} onPointerCancel={() => { touchRef.current = null; }} onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(true); }} onPointerLeave={() => setHovered(false)} onWheel={() => setPlaying(false)}>
-      <div className="strategy-carousel-controls">
-        <div className="strategy-carousel-transport">
-          <button type="button" className="strategy-autoplay" aria-label={playing ? "Pause strategy autoplay" : "Start strategy autoplay"} aria-controls="strategy-carousel-panels" onPointerDown={(event) => event.preventDefault()} onClick={() => { setPlaying((current) => !current); setHovered(false); }}><span aria-hidden="true">{playing ? "Ⅱ" : "▶"}</span>{playing ? "Pause" : "Play"}</button>
-          <button type="button" aria-label="Previous strategy" aria-controls="strategy-carousel-panels" onClick={() => navigate(position.index - 1)}>←</button>
-          <button type="button" aria-label="Next strategy" aria-controls="strategy-carousel-panels" onClick={() => navigate(position.index + 1)}>→</button>
+    <div
+      className="strategy-carousel"
+      ref={rootRef}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Master Strategy Frameworks"
+      onKeyDown={onKeyDown}
+      onFocusCapture={() => setPlaying(false)}
+      onPointerDownCapture={onPointerDown}
+      onPointerUpCapture={onPointerUp}
+      onPointerCancel={() => { touchRef.current = null; }}
+      onPointerEnter={(event) => { if (event.pointerType === "mouse") setHovered(true); }}
+      onPointerLeave={() => setHovered(false)}
+      onWheel={() => setPlaying(false)}
+    >
+      {/* High-Visibility Fullscreen Command Bar */}
+      <div className="strategy-deck-bar">
+        <div className="strategy-deck-brand">
+          <div className="strategy-brand-top">
+            <span className="strategy-deck-eyebrow">02 / MASTER STRATEGIES</span>
+            <span className="strategy-deck-dot" aria-hidden="true" />
+            <span className="strategy-deck-badge">7 LIVE BLUEPRINTS</span>
+          </div>
+          <h2 id="strategies-title" className="strategy-deck-title">
+            Seven approaches. <span>One mindset.</span>
+          </h2>
         </div>
-        <p className="strategy-carousel-position" aria-live={playing ? "off" : "polite"} aria-atomic="true"><span>{String(position.index + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>{slides[position.index].title}</p>
-        <label className="strategy-carousel-speed"><span className="trade-sr-only">Strategy autoplay interval</span><select value={duration} onChange={(event) => setDuration(Number(event.target.value))}><option value="8000">8 sec</option><option value="12000">12 sec</option><option value="20000">20 sec</option></select></label>
+
+        <nav className="strategy-navigation" aria-label="Choose a strategy framework">
+          {slides.map((slide, index) => {
+            const isCurrent = index === position.index;
+            return (
+              <a
+                key={slide.id}
+                href={`#${slide.id}`}
+                aria-current={isCurrent ? "true" : undefined}
+                className={`strategy-nav-pill ${isCurrent ? "is-active" : ""}`}
+                onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault();
+                  navigate(index);
+                }}
+              >
+                <span className="nav-pill-num">0{index + 1}</span>
+                <span className="nav-pill-title">{slide.title}</span>
+                {isCurrent && <span className="nav-pill-dot" aria-hidden="true" />}
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Previous / Next, Autoplay & Fullscreen Controls */}
+        <div className="strategy-nav-buttons">
+          <button
+            type="button"
+            className="strategy-btn-round"
+            aria-label="Previous strategy"
+            onClick={() => navigate(position.index - 1)}
+            title="Previous (←)"
+          >
+            ←
+          </button>
+          <span className="strategy-slide-counter">
+            <strong>0{position.index + 1}</strong> / 0{slides.length}
+          </span>
+          <button
+            type="button"
+            className="strategy-btn-round"
+            aria-label="Next strategy"
+            onClick={() => navigate(position.index + 1)}
+            title="Next (→)"
+          >
+            →
+          </button>
+          <button
+            type="button"
+            className="strategy-autoplay-toggle"
+            aria-label={playing ? "Pause autoplay" : "Start autoplay"}
+            onClick={() => { setPlaying((c) => !c); setHovered(false); }}
+            title="Toggle autoplay"
+          >
+            {playing ? "⏸ Pause" : "▶ Play"}
+          </button>
+          <button
+            type="button"
+            className={`strategy-fullscreen-toggle ${isBrowserFullscreen ? "is-active" : ""}`}
+            aria-label={isBrowserFullscreen ? "Exit full screen" : "Enter full screen"}
+            onClick={toggleBrowserFullscreen}
+            title={isBrowserFullscreen ? "Exit full screen" : "Enter full screen view"}
+          >
+            {isBrowserFullscreen ? "✕ Exit" : "⛶ Fullscreen"}
+          </button>
+        </div>
       </div>
-      <nav className="strategy-navigation" aria-label="Choose a strategy framework">
-        {slides.map((slide, index) => <a key={slide.id} href={`#${slide.id}`} aria-current={index === position.index ? "true" : undefined} onClick={(event) => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); navigate(index); }}>{slide.title}<span aria-hidden="true">{index === position.index ? "●" : "↗"}</span></a>)}
-      </nav>
-      <div className="strategy-carousel-progress" aria-hidden="true"><span key={`${position.visit}-${duration}`} style={{ animationDuration: `${duration}ms`, animationPlayState: running ? "running" : "paused" }} /></div>
+
+      {/* Progress Line */}
+      <div className="strategy-carousel-progress" aria-hidden="true">
+        <span
+          key={`${position.visit}-${duration}`}
+          style={{ animationDuration: `${duration}ms`, animationPlayState: running ? "running" : "paused" }}
+        />
+      </div>
+
+      {/* Slide Panels */}
       <div className="strategy-carousel-panels" id="strategy-carousel-panels">
-        {slides.map((slide, index) => <div className={`strategy-carousel-panel ${index === position.index ? "is-active" : ""}`} key={slide.id} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${slides.length}: ${slide.title}`} aria-hidden={index !== position.index} inert={index !== position.index}>{slide.content}</div>)}
+        {slides.map((slide, index) => (
+          <div
+            className={`strategy-carousel-panel ${index === position.index ? "is-active" : ""}`}
+            key={slide.id}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${slides.length}: ${slide.title}`}
+            aria-hidden={index !== position.index}
+            inert={index !== position.index}
+          >
+            {slide.content}
+          </div>
+        ))}
       </div>
-      <p className="strategy-carousel-hint"><span>{playing ? hovered ? "Paused while you hover · move away to continue" : "Autoplay · one framework at a time" : "Paused · explore at your own pace"}</span><span>← → to navigate · Swipe on mobile</span></p>
+
+      {/* Simple Footer Hint */}
+      <div className="strategy-carousel-footer-bar">
+        <p className="strategy-carousel-hint">
+          <span>Use ← and → arrow keys to switch frameworks · Click phases to highlight setup rules</span>
+        </p>
+        <a href="#development" className="strategy-cta-link">
+          Discuss Custom EA / Indicator Development →
+        </a>
+      </div>
     </div>
   );
 }
