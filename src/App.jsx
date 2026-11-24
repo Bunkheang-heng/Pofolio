@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Ask from "./Ask";
 import WorldSwitch from "./components/WorldSwitch";
+import DirectResume from "./components/DirectResume";
+import ChatHeroSection from "./components/ChatHeroSection";
 import {
   featuredProjects,
   githubStats,
   moreProjects,
 } from "./data/githubProjects";
-import { certificateImage, certificates, resumeUrl } from "./data/certificates";
+import { certificateCategories, certificateImage, certificates, resumeUrl } from "./data/certificates";
 
 const schools = [
   {
@@ -37,6 +39,18 @@ const experiences = [
     org: "ASEAN Cyber Shield",
     time: "2024–2025",
     points: ["ML phishing detection + VirusTotal", "Selected 14 of 300 for Korea"],
+  },
+  {
+    role: "Freelance Engineer",
+    org: "SanSom",
+    time: "Freelance · 2024",
+    points: ["Loan Management System — automated repayment & interest calculation engine", "Client tracking, role-based access & administrative financial dashboard"],
+  },
+  {
+    role: "Freelance Full-Stack & Mobile",
+    org: "REELTIME Media",
+    time: "Freelance · 2024",
+    points: ["Movie discovery web platform & cross-platform mobile application", "Media catalog, watchlist synchronization & video playback streaming"],
   },
 ];
 
@@ -74,8 +88,34 @@ function ProjectCard({ project, index }) {
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [filter, setFilter] = useState("All projects");
+  const [certCategory, setCertCategory] = useState("All");
+  const [certPage, setCertPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6);
   const filters = { "All projects": null, "AI & software": ["AI", "App"], Education: ["Edu"], Security: ["Sec"] };
   const projects = featuredProjects.filter((project) => !filters[filter] || filters[filter].includes(project.tag));
+
+  const filteredCertificates = certCategory === "All"
+    ? certificates
+    : certificates.filter((c) => c.category === certCategory);
+
+  const totalPages = Math.max(1, Math.ceil(filteredCertificates.length / pageSize));
+  const currentPage = Math.min(certPage, totalPages);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, filteredCertificates.length);
+  const paginatedCertificates = filteredCertificates.slice(startIndex, endIndex);
+
+  const handleCategoryChange = (cat) => {
+    setCertCategory(cat);
+    setCertPage(1);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCertPage(newPage);
+    const anchor = document.getElementById("certificate-toolbar-anchor");
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <>
@@ -85,17 +125,35 @@ export default function App() {
         <a className="wordmark" href="#home" aria-label="Bun Kheang Heng home">bunkheang<span>✳</span></a>
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close −" : "Menu +"}</button>
         <nav className={`main-nav ${menuOpen ? "is-open" : ""}`} id="main-nav" aria-label="Main navigation">
-          {[["Projects", "projects"], ["About", "about"], ["Experience", "experience"], ["Credentials", "credentials"]].map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}</a>)}
+          {[
+            ["Ask AI", "chat"],
+            ["Projects", "projects"],
+            ["About", "about"],
+            ["Experience", "experience"],
+            ["Resume", "resume"],
+            ["Credentials", "credentials"],
+          ].map(([label, id]) => (
+            <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>
+              {label}
+            </a>
+          ))}
           <a className="nav-contact" href="#contact" onClick={() => setMenuOpen(false)}>Let’s talk <Arrow diagonal /></a>
         </nav>
       </header>
       <main id="main">
+        {/* INTERACTIVE CHAT UI ABOVE HERO */}
+        <ChatHeroSection />
+
         <section className="hero" id="home" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow"><span className="status-dot" /> Software engineer. Always curious.</p>
             <h1 id="hero-title">Ideas into<br />real things.</h1>
             <p className="hero-intro">Hey, I’m Bun Kheang Heng. I build useful software, explore AI, and turn curious ideas into working products. Made with curiosity, from Phnom Penh.</p>
-            <div className="hero-actions"><a className="button button-dark" href="#projects">Explore my work <Arrow /></a><ResumeLink className="button-outline" /></div>
+            <div className="hero-actions">
+              <a className="button button-dark" href="#projects">Explore my work <Arrow /></a>
+              <a className="button button-outline" href="#resume">View Resume <Arrow diagonal /></a>
+              <a className="button button-outline" href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">PDF ↓</a>
+            </div>
             <a className="hero-footnote" href={githubStats.profile} target="_blank" rel="noreferrer"><span className="tiny-code" aria-hidden="true">&lt;/&gt;</span> {githubStats.public} public repos. Plenty of ideas. <Arrow diagonal /></a>
             <a className="hero-world-link" href="/trading/">Meet my trading side <Arrow diagonal /></a>
           </div>
@@ -121,7 +179,147 @@ export default function App() {
           <div className="awards"><p className="eyebrow">Along the way</p><div>{awards.map((award) => <span className="award" key={award}><span aria-hidden="true">✳</span>{award}</span>)}</div></div>
         </section>
         <section className="lab-section section-pad" id="lab" aria-labelledby="lab-title"><div className="section-heading"><div><p className="eyebrow">Experiments & side quests</p><h2 id="lab-title">Always making<br />something.</h2></div><span className="lab-doodle" aria-hidden="true">✳</span></div><div className="lab-grid">{moreProjects.filter((project) => project.tag !== "Fx").map((project, index) => <a key={project.name} className="lab-card" href={project.url} target="_blank" rel="noreferrer"><span className="lab-number">0{index + 1} / {project.tag}</span><h3>{project.name}<Arrow diagonal /></h3><p>{project.detail}</p></a>)}</div></section>
-        <section className="credentials-section section-pad" id="credentials" aria-labelledby="credentials-title"><div className="section-heading"><div><p className="eyebrow">A little proof of the process</p><h2 id="credentials-title">Never done<br />learning.</h2></div><ResumeLink className="button-dark" /></div><div className="certificate-grid">{certificates.slice(0, 3).map((cert) => <a className="certificate-card" key={cert.file} href={`/certificate/${encodeURIComponent(cert.file)}`} target="_blank" rel="noreferrer"><div className="certificate-image"><img src={certificateImage(cert.file)} alt={cert.name} loading="lazy" /></div><div><h3>{cert.name}<Arrow diagonal /></h3><p>{cert.note}</p></div></a>)}</div><details className="more-certificates"><summary>More certificates <span>{certificates.length - 3} more <span aria-hidden="true">+</span></span></summary><div className="certificate-list">{certificates.slice(3).map((cert) => <a key={cert.file} href={`/certificate/${encodeURIComponent(cert.file)}`} target="_blank" rel="noreferrer"><span><strong>{cert.name}</strong><small>{cert.note}</small></span><Arrow diagonal /></a>)}</div></details></section>
+        {/* DIRECT RESUME SECTION */}
+        <section className="resume-section section-pad" id="resume" aria-labelledby="resume-title">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Curriculum Vitae &amp; Experience</p>
+              <h2 id="resume-title">The Complete<br />Profile.</h2>
+              <p className="heading-sub">Software engineer &amp; security researcher. Explore the interactive CV or inspect the original document directly below.</p>
+            </div>
+          </div>
+          <DirectResume />
+        </section>
+
+        {/* VERIFIED CREDENTIALS SECTION */}
+        <section className="credentials-section section-pad" id="credentials" aria-labelledby="credentials-title">
+          <div className="section-heading credentials-heading">
+            <div>
+              <p className="eyebrow">A little proof of the process</p>
+              <h2 id="credentials-title">Never done<br />learning.</h2>
+              <p className="heading-sub">17 verified credentials across cybersecurity, cloud architecture, AI, software engineering, and project management.</p>
+            </div>
+            <div className="credentials-heading-actions">
+              <a className="button" href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">Download Resume PDF <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+
+          {/* Certificate Filter & Summary Toolbar */}
+          <div id="certificate-toolbar-anchor" className="cert-anchor" />
+          <div className="certificate-toolbar">
+            <div className="certificate-filters" role="group" aria-label="Filter certificates by category">
+              {certificateCategories.map((cat) => {
+                const count = cat === "All" ? certificates.length : certificates.filter((c) => c.category === cat).length;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    className={`filter ${certCategory === cat ? "active" : ""}`}
+                    aria-pressed={certCategory === cat}
+                    onClick={() => handleCategoryChange(cat)}
+                  >
+                    {cat} <span className="filter-count">({count})</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="certificates-tally">
+              <span>Showing <strong>{filteredCertificates.length === 0 ? 0 : startIndex + 1}–{endIndex}</strong> of <strong>{filteredCertificates.length}</strong></span>
+              {totalPages > 1 && <span className="tally-page-badge">Page {currentPage} of {totalPages}</span>}
+            </div>
+          </div>
+
+          {/* Paginated Certificates Grid */}
+          <div className="certificate-grid certificate-grid-all">
+            {paginatedCertificates.map((cert) => (
+              <a
+                className="certificate-card"
+                key={cert.file}
+                href={`/certificate/${encodeURIComponent(cert.file)}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="certificate-image">
+                  <span className="cert-cat-pill">{cert.category}</span>
+                  <img src={certificateImage(cert.file)} alt={cert.name} loading="lazy" />
+                </div>
+                <div className="certificate-card-body">
+                  <h3>{cert.name}<Arrow diagonal /></h3>
+                  <p>{cert.note}</p>
+                  <span className="certificate-card-link">View Certificate <Arrow diagonal /></span>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {/* Certificate Pagination Controls */}
+          <div className="certificate-pagination" role="navigation" aria-label="Certificates pagination">
+            <div className="pagination-info">
+              Showing <strong>{filteredCertificates.length === 0 ? 0 : startIndex + 1}–{endIndex}</strong> of <strong>{filteredCertificates.length}</strong> {filteredCertificates.length === 1 ? "credential" : "credentials"}
+              {filteredCertificates.length > 0 && <span className="pagination-sub-info"> (Page {currentPage} of {totalPages})</span>}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="pagination-controls">
+                <button
+                  type="button"
+                  className="pagination-btn pagination-nav"
+                  disabled={currentPage === 1}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  aria-label="Previous page"
+                >
+                  <span aria-hidden="true">←</span> Prev
+                </button>
+
+                <div className="pagination-pages" role="group" aria-label="Page numbers">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      type="button"
+                      className={`pagination-btn pagination-number ${currentPage === page ? "active" : ""}`}
+                      onClick={() => handlePageChange(page)}
+                      aria-label={`Go to page ${page}`}
+                      aria-current={currentPage === page ? "page" : undefined}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  className="pagination-btn pagination-nav"
+                  disabled={currentPage === totalPages}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  aria-label="Next page"
+                >
+                  Next <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            )}
+
+            <div className="pagination-density" role="group" aria-label="Certificates per page">
+              <span className="density-label">Per page:</span>
+              {[6, 9, "All"].map((size) => {
+                const isActive = (size === "All" && pageSize >= 999) || pageSize === size;
+                return (
+                  <button
+                    key={size}
+                    type="button"
+                    className={`density-pill ${isActive ? "active" : ""}`}
+                    onClick={() => {
+                      setPageSize(size === "All" ? 999 : size);
+                      setCertPage(1);
+                    }}
+                    aria-pressed={isActive}
+                  >
+                    {size}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
         <section className="world-portal" aria-labelledby="other-world-title">
           <div className="portal-copy">
             <p className="eyebrow">There’s another side to the story</p>
@@ -142,7 +340,25 @@ export default function App() {
         </section>
         <section className="contact-section section-pad" id="contact" aria-labelledby="contact-title"><Star className="contact-star" /><p className="eyebrow">Good things start with a conversation</p><h2 id="contact-title">Have an idea?<br />Let’s make it real.</h2><a className="button button-dark" href="mailto:bunkheangheng99@gmail.com">Say hello <Arrow diagonal /></a><a className="contact-email" href="mailto:bunkheangheng99@gmail.com">bunkheangheng99@gmail.com</a></section>
       </main>
-      <footer className="site-footer"><div className="footer-top"><a className="wordmark" href="#home">bunkheang<span>✳</span></a><p>Built with curiosity.<br />From Phnom Penh, Cambodia.</p><div className="footer-links"><a href={githubStats.profile} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a><a href="mailto:bunkheangheng99@gmail.com">Email <Arrow diagonal /></a><a href="tel:+855973556059">097-355-6059 <Arrow diagonal /></a><a href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">Resume ↓</a><a href="/trading/">Trading world <Arrow diagonal /></a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Bun Kheang Heng</span><a href="#home">Back to top ↑</a></div></footer>
+      <footer className="site-footer">
+        <div className="footer-top">
+          <a className="wordmark" href="#home">bunkheang<span>✳</span></a>
+          <p>Built with curiosity.<br />From Phnom Penh, Cambodia.</p>
+          <div className="footer-links">
+            <a href={githubStats.profile} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
+            <a href="mailto:bunkheangheng99@gmail.com">Email <Arrow diagonal /></a>
+            <a href="tel:+855973556059">097-355-6059 <Arrow diagonal /></a>
+            <a href="#resume">Resume <Arrow diagonal /></a>
+            <a href="#credentials">Credentials <Arrow diagonal /></a>
+            <a href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">Resume PDF ↓</a>
+            <a href="/trading/">Trading world <Arrow diagonal /></a>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} Bun Kheang Heng</span>
+          <a href="#home">Back to top ↑</a>
+        </div>
+      </footer>
       <Ask />
     </>
   );

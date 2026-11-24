@@ -20,12 +20,18 @@ function readJson(req) {
   });
 }
 
-function serveTradingPage(server) {
-  server.middlewares.use((req, _res, next) => {
-    if (req.url?.split("?")[0] === "/trading") {
-      req.url = req.url.replace(/^\/trading(?=\?|$)/, "/trading/index.html");
+function servePortfolioPages(server) {
+  server.middlewares.use((req, res, next) => {
+    const pathname = req.url?.split("?")[0];
+    if (pathname === "/trading" || pathname === "/trading/") {
+      req.url = req.url.replace(/^\/trading(?:\/|\?|$)/, "/trading/index.html");
+      next();
+    } else if (pathname === "/resume" || pathname === "/resume/") {
+      res.writeHead(302, { Location: "/#resume" });
+      res.end();
+    } else {
+      next();
     }
-    next();
   });
 }
 
@@ -48,8 +54,8 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
       {
         name: "portfolio-pages",
-        configureServer: serveTradingPage,
-        configurePreviewServer: serveTradingPage,
+        configureServer: servePortfolioPages,
+        configurePreviewServer: servePortfolioPages,
       },
       {
         name: "sealion-dev",
