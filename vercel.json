@@ -4,6 +4,10 @@
     {
       "source": "/trading",
       "destination": "/trading/index.html"
+    },
+    {
+      "source": "/resume",
+      "destination": "/resume/index.html"
     }
   ]
 }

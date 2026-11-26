@@ -1,5 +1,20 @@
+import { useEffect, useState } from "react";
+
 export default function Ask() {
-  function handleClick(e) {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      // Only show the floating jump button once user scrolls past the full-screen chat section
+      setVisible(window.scrollY > 420);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  function handleClick() {
     const chatInput = document.querySelector(".chat-input");
     if (chatInput) {
       setTimeout(() => chatInput.focus(), 300);

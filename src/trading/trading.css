@@ -19,7 +19,18 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 35px;
+  scroll-padding-top: 115px;
+}
+
+#trading-home,
+#approach,
+#strategies,
+#development,
+#trading-projects,
+#playbook,
+#mindset,
+#trading-contact {
+  scroll-margin-top: 115px;
 }
 
 body {
@@ -488,12 +499,111 @@ img, svg {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 18px 22px;
+  padding: 14px 22px;
   border-bottom: 1px solid var(--trade-line);
   font-family: var(--trade-mono);
   font-size: 8px;
   letter-spacing: .04em;
   color: var(--trade-muted);
+  flex-wrap: wrap;
+}
+
+.study-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #090d0a;
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.study-mode-btn {
+  background: none;
+  border: none;
+  border-radius: 3px;
+  padding: 4px 10px;
+  font-family: var(--trade-mono);
+  font-size: 8.5px;
+  color: var(--trade-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.study-mode-btn.is-active {
+  background: var(--trade-lime);
+  color: #101411;
+  font-weight: 700;
+}
+
+.study-symbol-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.study-tag {
+  font-family: var(--trade-mono);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: rgba(198, 243, 107, 0.15);
+  color: var(--trade-lime);
+  border: 1px solid rgba(198, 243, 107, 0.3);
+}
+
+.chart-label-red {
+  fill: #ff5f56;
+}
+
+.chart-label-yellow {
+  fill: #ffdf00;
+}
+
+.chart-interactive-layer {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.chart-interactive-layer.is-pulsed {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 8px rgba(198, 243, 107, 0.8));
+}
+
+.study-concepts-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #0a0e0b;
+  border-top: 1px solid var(--trade-line);
+  flex-wrap: wrap;
+}
+
+.concepts-label {
+  font-family: var(--trade-mono);
+  font-size: 8.5px;
+  color: #889482;
+  font-weight: 600;
+}
+
+.study-concept-chip {
+  background: #141a15;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-family: var(--trade-mono);
+  font-size: 8px;
+  color: #c0cbbe;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.study-concept-chip:hover,
+.study-concept-chip.is-active {
+  background: rgba(198, 243, 107, 0.2);
+  border-color: var(--trade-lime);
+  color: var(--trade-lime);
 }
 
 .study-topline > span:first-child {

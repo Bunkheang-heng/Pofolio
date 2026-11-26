@@ -8,6 +8,18 @@ export const githubStats = {
 
 export const featuredProjects = [
   {
+    name: "SanSom",
+    detail: "Loan management system — automated repayment & interest calculation engine.",
+    url: "https://github.com/Bunkheang-heng",
+    tag: "Fin",
+  },
+  {
+    name: "REELTIME Media",
+    detail: "Movie discovery web platform + cross-platform mobile app with streaming.",
+    url: "https://github.com/Bunkheang-heng",
+    tag: "App",
+  },
+  {
     name: "QuickResume",
     detail: "AI resume builder — Next.js + Firebase.",
     url: "https://github.com/Bunkheang-heng/QuickResume",

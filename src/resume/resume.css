@@ -1,0 +1,242 @@
+/* ==========================================================================
+   DEDICATED RESUME PAGE STYLES
+   ========================================================================== */
+
+.resume-page-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream, #f4f4f0);
+  color: var(--ink, #000000);
+}
+
+.resume-page-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #000000;
+  color: #ffffff;
+  border-bottom: 2px solid #000000;
+}
+
+.resume-nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.resume-page-header .wordmark {
+  color: #ffffff;
+}
+
+.resume-page-header .wordmark span {
+  color: #ff90e8;
+}
+
+.resume-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.nav-back-btn,
+.nav-trading-link {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 6px 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-back-btn:hover,
+.nav-trading-link:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+.resume-download-nav-btn {
+  background: #ffdf00 !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: 2px 2px 0 #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  padding: 8px 16px !important;
+}
+
+.resume-download-nav-btn:hover {
+  background: #ffffff !important;
+  transform: translate(-1px, -1px);
+}
+
+/* Banner */
+.resume-page-banner {
+  background: #ffdf00;
+  border-bottom: 2px solid #000000;
+  padding: 40px 24px;
+}
+
+.resume-banner-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2b2b2b;
+}
+
+.resume-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.8);
+}
+
+.resume-banner-title {
+  font-family: "DM Sans", Arial, sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #000000;
+  margin: 0;
+}
+
+.resume-banner-lead {
+  font-size: 17px;
+  font-weight: 500;
+  color: #1a1a1a;
+  max-width: 750px;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.resume-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2e2e2e;
+  margin-top: 6px;
+}
+
+/* Main Body */
+.resume-page-main {
+  flex: 1;
+  padding: 40px 24px 60px;
+}
+
+.resume-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Footer */
+.resume-page-footer {
+  background: #000000;
+  color: #ffffff;
+  border-top: 2px solid #000000;
+  padding: 40px 24px 30px;
+}
+
+.resume-footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.resume-footer-brand p {
+  color: #a3a3a3;
+  font-size: 14px;
+  max-width: 400px;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.resume-footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resume-footer-actions a {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.resume-footer-actions a:hover {
+  color: #ff90e8;
+}
+
+.resume-footer-bottom {
+  max-width: 1100px;
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #737373;
+  font-size: 13px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.resume-footer-bottom a {
+  color: #a3a3a3;
+}
+
+.resume-footer-bottom a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .resume-nav-container {
+    padding: 12px 16px;
+  }
+  .resume-page-banner {
+    padding: 30px 16px;
+  }
+  .resume-page-main {
+    padding: 24px 16px 40px;
+  }
+  .resume-page-footer {
+    padding: 30px 16px;
+  }
+}

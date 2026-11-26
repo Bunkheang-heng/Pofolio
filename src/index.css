@@ -22,7 +22,19 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 24px;
+  scroll-padding-top: 115px;
+}
+
+#chat,
+#home,
+#projects,
+#about,
+#experience,
+#lab,
+#resume,
+#credentials,
+#contact {
+  scroll-margin-top: 115px;
 }
 
 body {
@@ -193,6 +205,57 @@ h1 {
   font-size: 19px;
   line-height: 1.55;
   margin: 30px 0;
+}
+
+.hero-credentials-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 24px;
+}
+
+.hero-cred-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: #ffffff;
+  border: 1.5px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.recruiter-packet-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 1.5px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  border-radius: 4px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.recruiter-packet-btn:hover {
+  background: #ffdf00;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.recruiter-packet-btn.is-copied {
+  background: #eef8d8;
+  color: #244b0c;
+  border-color: #7cb52c;
 }
 
 .hero-actions {
@@ -2309,6 +2372,55 @@ summary::-webkit-details-marker {
   }
 }
 
+.project-card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-sim-wrapper {
+  margin-top: 10px;
+}
+
+.sim-toggle-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: #ffdf00;
+  border: 1.5px solid #000000;
+  border-radius: 4px;
+  box-shadow: 2px 2px 0 #000000;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sim-toggle-action:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.sim-toggle-sansom {
+  background: #ffdf00;
+  color: #000000;
+}
+
+.sim-toggle-reeltime {
+  background: #ff6b4a;
+  color: #ffffff;
+}
+
+.sim-toggle-phishing {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
 .hero-world-link {
   display: flex;
   align-items: center;
@@ -2328,4 +2440,432 @@ summary::-webkit-details-marker {
 .hero-world-link:hover {
   background: #c6f36b;
   color: #101411;
+}
+
+/* ==========================================================================
+   RESUME TEASER / REDIRECT CARD
+   ========================================================================== */
+
+.resume-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resume-redirect-card {
+  border: var(--border, 2px solid #000000);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 8px 8px 0 #000000;
+  overflow: hidden;
+  margin-top: 32px;
+}
+
+.resume-card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #ffdf00;
+  border-bottom: var(--border, 2px solid #000000);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.resume-card-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #000000;
+}
+
+.resume-card-location {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.resume-card-content {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 36px;
+  padding: 32px 28px;
+}
+
+.resume-card-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-card-role {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #23a094;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.resume-card-bio h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  color: #000000;
+}
+
+.resume-card-bio p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #444444;
+}
+
+.resume-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.resume-highlight-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  background: var(--cream, #f4f4f0);
+  border: 1.5px solid #000000;
+  border-radius: 4px;
+}
+
+.highlight-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #666666;
+  letter-spacing: .06em;
+}
+
+.resume-highlight-item strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.resume-highlight-item small {
+  font-size: 11.5px;
+  color: #555555;
+}
+
+.resume-card-action-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+  background: #f7f9f5;
+  border: 1.5px solid #000000;
+  border-radius: 6px;
+}
+
+.resume-badge-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #ff90e8;
+  background: #000000;
+  padding: 3px 8px;
+  border-radius: 3px;
+  width: fit-content;
+  letter-spacing: .06em;
+}
+
+.resume-badge-preview h4 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+}
+
+.resume-badge-preview p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #555555;
+  margin: 0;
+}
+
+.resume-card-cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resume-main-redirect-btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 15px;
+  padding: 14px 20px;
+  background: #000000;
+  color: #ffffff;
+}
+
+.resume-main-redirect-btn:hover {
+  background: #ffdf00;
+  color: #000000;
+}
+
+.resume-secondary-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.resume-secondary-btns .button {
+  justify-content: center;
+  font-size: 12.5px;
+  padding: 8px 12px;
+}
+
+@media (max-width: 900px) {
+  .resume-card-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .resume-highlights-grid {
+    grid-template-columns: 1fr;
+  }
+  .resume-secondary-btns {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ==========================================================================
+   RESUME REDIRECT SHOWCASE CARD (HOME PAGE)
+   ========================================================================== */
+
+.resume-redirect-card {
+  border: var(--border);
+  background: #ffffff;
+  box-shadow: 8px 8px 0 #000000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+.resume-card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #ffdf00;
+  border-bottom: var(--border);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.resume-card-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #000000;
+}
+
+.resume-card-location {
+  color: #3b3b36;
+}
+
+.resume-card-content {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0;
+}
+
+.resume-card-bio {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-right: var(--border);
+}
+
+.resume-card-role {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #63635d;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.resume-card-bio h3 {
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  margin: 0;
+  color: #000000;
+}
+
+.resume-card-bio p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #383833;
+  margin: 0;
+}
+
+.resume-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.resume-highlight-item {
+  padding: 12px 14px;
+  background: #fafaf6;
+  border: 1.5px solid #000000;
+  box-shadow: 3px 3px 0 #000000;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.highlight-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #70706a;
+}
+
+.resume-highlight-item strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.25;
+}
+
+.resume-highlight-item small {
+  font-size: 11.5px;
+  color: #55554f;
+}
+
+.resume-card-action-box {
+  padding: 32px 28px;
+  background: #fafaf6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.resume-badge-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-label {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 3px 8px;
+  background: #ff90e8;
+  border: 1.5px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.resume-badge-preview h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.resume-badge-preview p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #4b4b45;
+}
+
+.resume-card-cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-main-redirect-btn {
+  background: #000000 !important;
+  color: #ffffff !important;
+  padding: 14px 20px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  box-shadow: 4px 4px 0 #ffdf00 !important;
+  justify-content: center;
+}
+
+.resume-main-redirect-btn:hover {
+  background: #ffdf00 !important;
+  color: #000000 !important;
+  box-shadow: 4px 4px 0 #000000 !important;
+}
+
+.resume-secondary-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.resume-secondary-btns .button {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+  font-size: 12.5px;
+  padding: 9px 12px;
+}
+
+@media (max-width: 900px) {
+  .resume-card-content {
+    grid-template-columns: 1fr;
+  }
+  .resume-card-bio {
+    border-right: none;
+    border-bottom: var(--border);
+  }
+}
+
+@media (max-width: 540px) {
+  .resume-highlights-grid {
+    grid-template-columns: 1fr;
+  }
+  .resume-secondary-btns {
+    flex-direction: column;
+  }
 }

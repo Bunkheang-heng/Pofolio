@@ -27,8 +27,8 @@ function servePortfolioPages(server) {
       req.url = req.url.replace(/^\/trading(?:\/|\?|$)/, "/trading/index.html");
       next();
     } else if (pathname === "/resume" || pathname === "/resume/") {
-      res.writeHead(302, { Location: "/#resume" });
-      res.end();
+      req.url = req.url.replace(/^\/resume(?:\/|\?|$)/, "/resume/index.html");
+      next();
     } else {
       next();
     }
@@ -46,6 +46,7 @@ export default defineConfig(({ mode }) => {
         input: {
           software: fileURLToPath(new URL("./index.html", import.meta.url)),
           trading: fileURLToPath(new URL("./trading/index.html", import.meta.url)),
+          resume: fileURLToPath(new URL("./resume/index.html", import.meta.url)),
         },
       },
     },

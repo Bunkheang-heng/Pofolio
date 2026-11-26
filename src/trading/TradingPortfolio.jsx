@@ -3,6 +3,7 @@ import WorldSwitch from "../components/WorldSwitch";
 import { githubStats, moreProjects } from "../data/githubProjects";
 import { plays, pairs } from "../data/trading";
 import { StrategySections, DevelopmentSection } from "./StrategySections";
+import SmartMoneyVisualizer from "./SmartMoneyVisualizer";
 
 const tradingProjects = moreProjects.filter((project) => project.tag === "Fx");
 
@@ -127,6 +128,7 @@ export default function TradingPortfolio() {
             <article><span className="approach-step">02 — WAIT</span><span className="approach-icon" aria-hidden="true">⊕</span><h3>Have a point of interest.</h3><p>My playbook brings together order blocks, fair value gaps, and liquidity sweeps.</p><span className="approach-tags">POI / OB / FVG</span></article>
             <article><span className="approach-step">03 — RESPECT RISK</span><span className="approach-icon" aria-hidden="true">▱</span><h3>Risk comes before size.</h3><p>A defined plan is the foundation. I bring the same deliberate thinking to my research and trading tools.</p><span className="approach-tags">PLAN / PROCESS / DISCIPLINE</span></article>
           </div>
+          <SmartMoneyVisualizer />
         </section>
 
         <StrategySections />
@@ -142,7 +144,7 @@ export default function TradingPortfolio() {
         <section className="trade-section trade-contact" id="trading-contact" aria-labelledby="trading-contact-title"><div><p className="trade-eyebrow">06 / LET’S CONNECT</p><h2 id="trading-contact-title">Have a trading idea?<br />Let’s <span>build it.</span></h2><p>Expert Advisors, custom indicators, and trading strategies.</p><a className="trade-button" href="mailto:bunkheangheng99@gmail.com">Get in touch <ExternalArrow /></a><a className="trade-contact-email" href="mailto:bunkheangheng99@gmail.com">bunkheangheng99@gmail.com</a></div><a className="software-return" href="/"><span className="return-label">THERE’S ANOTHER WORLD</span><span className="return-art" aria-hidden="true">&lt;/&gt;<span>✳</span></span><h3>Meet the<br />software engineer.</h3><p>AI, full-stack products, cybersecurity.<br />A completely different side of me.</p><span className="return-bottom">Back to my software portfolio <ExternalArrow /></span></a></section>
       </main>
 
-      <footer className="trade-footer"><div className="trade-footer-top"><a className="trade-brand" href="#trading-home">BEN10<span className="brand-divider"> / </span>FX</a><p>Two worlds. One curious mind.<br />Phnom Penh, Cambodia.</p><div><a href="/">Software world <ExternalArrow /></a><a href={githubStats.profile} target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a><a href="mailto:bunkheangheng99@gmail.com">Email <ExternalArrow /></a></div></div><div className="trade-footer-bottom"><span>© {new Date().getFullYear()} Bun Kheang Heng</span><span>Trading · EA development · Indicators · Strategy development</span><a href="#trading-home">Back to top ↑</a></div></footer>
+      <footer className="trade-footer"><div className="trade-footer-top"><a className="trade-brand" href="#trading-home">BEN10<span className="brand-divider"> / </span>FX</a><p>Two worlds. One curious mind.<br />Phnom Penh, Cambodia.</p><div><a href="/">Software world <ExternalArrow /></a><a href="/resume/">Resume <ExternalArrow /></a><a href={githubStats.profile} target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a><a href="mailto:bunkheangheng99@gmail.com">Email <ExternalArrow /></a></div></div><div className="trade-footer-bottom"><span>© {new Date().getFullYear()} Bun Kheang Heng</span><span>Trading · EA development · Indicators · Strategy development</span><a href="#trading-home">Back to top ↑</a></div></footer>
     </div>
   );
 }

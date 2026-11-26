@@ -1,0 +1,369 @@
+/* ==========================================================================
+   REELTIME MEDIA INTERACTIVE MOBILE APP STYLING
+   ========================================================================== */
+
+.reeltime-demo {
+  margin-top: 18px;
+  background: #ffffff;
+  border: var(--border, 2px solid #000000);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 #000000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: reel-in 0.25s ease-out;
+}
+
+@keyframes reel-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.phone-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #ffc900; /* neo-brutalist orange/yellow */
+  border-bottom: var(--border, 2px solid #000000);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.phone-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #000000;
+}
+
+.phone-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e11d48;
+}
+
+.phone-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  background: #000000;
+  color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+
+.phone-nav-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #111111;
+  border-bottom: var(--border, 2px solid #000000);
+}
+
+.tab-btn {
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  color: #999999;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn:last-child {
+  border-right: none;
+}
+
+.tab-btn:hover {
+  color: #ffffff;
+}
+
+.tab-btn.active {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Phone Screen */
+.phone-screen {
+  padding: 14px;
+  min-height: 180px;
+  background: #fafaf6;
+}
+
+/* Catalog View */
+.catalog-search-fake {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1.5px solid #000000;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #777777;
+  margin-bottom: 12px;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.movie-card-mini {
+  background: #ffffff;
+  border: 1.5px solid #000000;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-poster-mock {
+  height: 60px;
+  background: #23a094;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster-tag {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: #000000;
+  color: #ffffff;
+  font-family: var(--font-mono, monospace);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.poster-icon {
+  font-size: 20px;
+}
+
+.movie-info-mini {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.movie-info-mini strong {
+  font-size: 12px;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-info-mini small {
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  color: #666666;
+}
+
+.save-btn-mini {
+  margin-top: 4px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 4px;
+  background: #f4f4f0;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.save-btn-mini:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.save-btn-mini.saved {
+  background: #eef8d8;
+  color: #244b0c;
+  border-color: #7cb52c;
+}
+
+/* Watchlist View */
+.screen-watchlist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.watchlist-header-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: #444444;
+  font-family: var(--font-mono, monospace);
+  padding-bottom: 6px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.watchlist-empty {
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #666666;
+}
+
+.watchlist-empty button {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  color: #000000;
+  text-decoration: underline;
+  margin-top: 6px;
+}
+
+.watchlist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.watchlist-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 11.5px;
+}
+
+.remove-btn {
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  color: #e11d48;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* Video Player View */
+.screen-player {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mock-video-box {
+  height: 120px;
+  background: #000000;
+  border-radius: 4px;
+  border: 1.5px solid #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  color: #ffffff;
+}
+
+.player-overlay {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+}
+
+.player-quality {
+  color: #c6f36b;
+}
+
+.player-center-btn {
+  align-self: center;
+}
+
+.play-toggle-btn {
+  background: #ffdf00;
+  color: #000000;
+  border: 1.5px solid #000000;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.play-toggle-btn:hover {
+  background: #ffffff;
+  transform: scale(1.05);
+}
+
+.player-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.res-selector {
+  display: flex;
+  gap: 4px;
+}
+
+.res-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.res-pill.active {
+  background: #000000;
+  color: #ffffff;
+}
+
+.buffer-metric {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: #555555;
+}
+
+.phone-footer {
+  padding: 8px 14px;
+  background: #fafaf6;
+  border-top: 1px solid #dddddd;
+  font-size: 11px;
+  color: #4b4b45;
+  line-height: 1.35;
+}
+
+@media (max-width: 600px) {
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+}

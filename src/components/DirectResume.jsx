@@ -428,6 +428,30 @@ export default function DirectResume() {
             </div>
           </div>
 
+          <div className="pdf-mobile-fallback no-print">
+            <div className="pdf-fallback-info">
+              <strong>💡 Mobile &amp; Touch Friendly:</strong>
+              <span>If your device does not render PDF documents directly in browser, you can view the responsive Interactive CV or open/download the file.</span>
+            </div>
+            <div className="pdf-fallback-actions">
+              <button
+                type="button"
+                className="resume-action-btn resume-btn-outline"
+                onClick={() => setViewMode("web")}
+              >
+                Switch to Interactive CV ↗
+              </button>
+              <a
+                className="resume-action-btn resume-btn-dark"
+                href={resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open Fullscreen PDF ↗
+              </a>
+            </div>
+          </div>
+
           <div className="pdf-frame-wrapper">
             <iframe
               src={resumeUrl}

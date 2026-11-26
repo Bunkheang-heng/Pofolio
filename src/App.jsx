@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Ask from "./Ask";
 import WorldSwitch from "./components/WorldSwitch";
-import DirectResume from "./components/DirectResume";
 import ChatHeroSection from "./components/ChatHeroSection";
+import SanSomSimulator from "./components/SanSomSimulator";
+import ReeltimeDemo from "./components/ReeltimeDemo";
+import PhishingScanner from "./components/PhishingScanner";
 import {
   featuredProjects,
   githubStats,
@@ -76,13 +78,99 @@ function ResumeLink({ className = "" }) {
   return <a className={`button ${className}`} href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">Download resume<span aria-hidden="true">↓</span></a>;
 }
 
+function RecruiterDossierBtn({ className = "" }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    const text = `CANDIDATE DOSSIER: HENG BUNKHEANG
+Role: Full-Stack Product Developer · AI Systems · Cybersecurity Explorer
+Location: Phnom Penh, Cambodia (Open to Remote / Relocation)
+Email: bunkheangheng99@gmail.com | Phone: +855 097-355-6059
+
+ACADEMICS & HONORS:
+• Dual B.S. Degrees: Fort Hays State University (CS) & American University of Phnom Penh (ITM)
+• ASEAN Cyber Shield 2024 Researcher (Selected Top 14 of 300 across ASEAN for Korea)
+
+CORE PRODUCTION SYSTEMS:
+1. SanSom: Microfinance Automated Loan & Interest Calculation Engine
+2. REELTIME Media: Cross-Platform Movie Streaming & Watchlist Sync Platform
+3. Save the Children Cambodia: Positive Parenting Portal & Automated Chatbot
+4. SuperFx / Ben10-Fx: Algorithmic MQL5 Expert Advisors & Quantitative Trading Vault
+
+PORTFOLIO LINKS:
+• Interactive Portfolio: ${typeof window !== "undefined" ? window.location.origin : "https://bunkheang.dev"}
+• Interactive Resume: ${typeof window !== "undefined" ? window.location.origin + "/resume/" : "https://bunkheang.dev/resume/"}
+• GitHub: https://github.com/Bunkheang-heng (77 public repositories)`;
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      className={`recruiter-packet-btn ${className} ${copied ? "is-copied" : ""}`}
+      onClick={handleCopy}
+      title="Copy recruiter-ready candidate summary to clipboard"
+    >
+      <span>{copied ? "Dossier Copied! Ready to Forward ✓" : "📋 1-Click Recruiter Packet"}</span>
+    </button>
+  );
+}
+
 function ProjectArtwork({ index }) {
-  const symbols = ["Aa", "↗", "✳", "</>", "✦", "ច"];
-  return <div className={`project-art art-${index % 6}`} aria-hidden="true"><span className="art-orbit" /><span className="art-window"><span className="art-window-bar">● ● ●</span><span className="art-symbol">{symbols[index % 6]}</span></span><Star className="art-star" /><span className="art-cursor">↖</span></div>;
+  const symbols = ["§", "▶", "Aa", "↗", "✳", "</>", "✦", "ច"];
+  return <div className={`project-art art-${index % 8}`} aria-hidden="true"><span className="art-orbit" /><span className="art-window"><span className="art-window-bar">● ● ●</span><span className="art-symbol">{symbols[index % symbols.length]}</span></span><Star className="art-star" /><span className="art-cursor">↖</span></div>;
 }
 
 function ProjectCard({ project, index }) {
-  return <a className="project-card" href={project.url} target="_blank" rel="noreferrer"><ProjectArtwork index={index} /><div className="project-card-body"><span className="tag">{project.tag}</span><h3>{project.name}<Arrow diagonal /></h3><p>{project.detail}</p><span className="project-card-footer">Explore project <Arrow /></span></div></a>;
+  const [showDemo, setShowDemo] = useState(false);
+  const isSanSom = project.name === "SanSom";
+  const isReeltime = project.name === "REELTIME Media";
+  const isPhishing = project.name === "Phishing Detection";
+  const hasInteractiveDemo = isSanSom || isReeltime || isPhishing;
+
+  return (
+    <div className={`project-card-container ${hasInteractiveDemo ? "has-demo" : ""}`}>
+      <a className="project-card" href={project.url} target="_blank" rel="noreferrer">
+        <ProjectArtwork index={index} />
+        <div className="project-card-body">
+          <span className="tag">{project.tag}</span>
+          <h3>{project.name}<Arrow diagonal /></h3>
+          <p>{project.detail}</p>
+          <span className="project-card-footer">Explore project <Arrow /></span>
+        </div>
+      </a>
+      {hasInteractiveDemo && (
+        <div className="project-sim-wrapper">
+          <button
+            type="button"
+            className={`sim-toggle-action ${isSanSom ? "sim-toggle-sansom" : isReeltime ? "sim-toggle-reeltime" : "sim-toggle-phishing"}`}
+            onClick={(e) => {
+              e.preventDefault();
+              setShowDemo((prev) => !prev);
+            }}
+          >
+            <span>
+              {showDemo
+                ? `Hide ${isSanSom ? "Loan Calculator" : isReeltime ? "App Demo" : "Threat Scanner"} −`
+                : `⚡ ${isSanSom ? "Try Live Loan Engine Calculator" : isReeltime ? "Open Interactive App Prototype" : "Launch ML Phishing Scanner"} +`}
+            </span>
+          </button>
+          {showDemo && (
+            <>
+              {isSanSom && <SanSomSimulator />}
+              {isReeltime && <ReeltimeDemo />}
+              {isPhishing && <PhishingScanner />}
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function App() {
@@ -91,7 +179,7 @@ export default function App() {
   const [certCategory, setCertCategory] = useState("All");
   const [certPage, setCertPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
-  const filters = { "All projects": null, "AI & software": ["AI", "App"], Education: ["Edu"], Security: ["Sec"] };
+  const filters = { "All projects": null, "AI & software": ["AI", "App", "Fin"], Education: ["Edu"], Security: ["Sec"] };
   const projects = featuredProjects.filter((project) => !filters[filter] || filters[filter].includes(project.tag));
 
   const filteredCertificates = certCategory === "All"
@@ -126,14 +214,14 @@ export default function App() {
         <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close −" : "Menu +"}</button>
         <nav className={`main-nav ${menuOpen ? "is-open" : ""}`} id="main-nav" aria-label="Main navigation">
           {[
-            ["Ask AI", "chat"],
-            ["Projects", "projects"],
-            ["About", "about"],
-            ["Experience", "experience"],
-            ["Resume", "resume"],
-            ["Credentials", "credentials"],
-          ].map(([label, id]) => (
-            <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>
+            ["Ask AI", "#chat"],
+            ["Projects", "#projects"],
+            ["About", "#about"],
+            ["Experience", "#experience"],
+            ["Resume", "/resume/"],
+            ["Credentials", "#credentials"],
+          ].map(([label, href]) => (
+            <a key={label} href={href} onClick={() => setMenuOpen(false)}>
               {label}
             </a>
           ))}
@@ -149,10 +237,17 @@ export default function App() {
             <p className="eyebrow"><span className="status-dot" /> Software engineer. Always curious.</p>
             <h1 id="hero-title">Ideas into<br />real things.</h1>
             <p className="hero-intro">Hey, I’m Bun Kheang Heng. I build useful software, explore AI, and turn curious ideas into working products. Made with curiosity, from Phnom Penh.</p>
+            <div className="hero-credentials-strip" aria-label="Key qualifications and roles">
+              <span className="hero-cred-pill">Dual Degree FHSU &amp; AUPP</span>
+              <span className="hero-cred-pill">ASEAN Cyber Shield 2024</span>
+              <span className="hero-cred-pill">Full-Stack &amp; Freelance Systems</span>
+              <span className="hero-cred-pill">Algorithmic Trading &amp; EAs</span>
+            </div>
             <div className="hero-actions">
               <a className="button button-dark" href="#projects">Explore my work <Arrow /></a>
-              <a className="button button-outline" href="#resume">View Resume <Arrow diagonal /></a>
+              <a className="button button-outline" href="/resume/">View Resume <Arrow diagonal /></a>
               <a className="button button-outline" href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">PDF ↓</a>
+              <RecruiterDossierBtn />
             </div>
             <a className="hero-footnote" href={githubStats.profile} target="_blank" rel="noreferrer"><span className="tiny-code" aria-hidden="true">&lt;/&gt;</span> {githubStats.public} public repos. Plenty of ideas. <Arrow diagonal /></a>
             <a className="hero-world-link" href="/trading/">Meet my trading side <Arrow diagonal /></a>
@@ -179,16 +274,82 @@ export default function App() {
           <div className="awards"><p className="eyebrow">Along the way</p><div>{awards.map((award) => <span className="award" key={award}><span aria-hidden="true">✳</span>{award}</span>)}</div></div>
         </section>
         <section className="lab-section section-pad" id="lab" aria-labelledby="lab-title"><div className="section-heading"><div><p className="eyebrow">Experiments & side quests</p><h2 id="lab-title">Always making<br />something.</h2></div><span className="lab-doodle" aria-hidden="true">✳</span></div><div className="lab-grid">{moreProjects.filter((project) => project.tag !== "Fx").map((project, index) => <a key={project.name} className="lab-card" href={project.url} target="_blank" rel="noreferrer"><span className="lab-number">0{index + 1} / {project.tag}</span><h3>{project.name}<Arrow diagonal /></h3><p>{project.detail}</p></a>)}</div></section>
-        {/* DIRECT RESUME SECTION */}
+        {/* RESUME SHOWCASE & REDIRECT SECTION */}
         <section className="resume-section section-pad" id="resume" aria-labelledby="resume-title">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Curriculum Vitae &amp; Experience</p>
+              <p className="eyebrow">Curriculum Vitae &amp; Career Record</p>
               <h2 id="resume-title">The Complete<br />Profile.</h2>
-              <p className="heading-sub">Software engineer &amp; security researcher. Explore the interactive CV or inspect the original document directly below.</p>
+              <p className="heading-sub">Full-stack engineering, cybersecurity research at ASEAN Cyber Shield, freelance systems (SanSom &amp; REELTIME Media), and dual-degree academics.</p>
+            </div>
+            <div className="resume-heading-actions">
+              <a className="button button-dark" href="/resume/">
+                Open Resume Page <Arrow diagonal />
+              </a>
             </div>
           </div>
-          <DirectResume />
+
+          <div className="resume-redirect-card">
+            <div className="resume-card-topbar">
+              <div className="resume-card-status">
+                <span className="status-dot" aria-hidden="true" />
+                <span>OFFICIAL CURRICULUM VITAE · BUN KHEANG HENG</span>
+              </div>
+              <span className="resume-card-location">PHNOM PENH, CAMBODIA · OPEN TO REMOTE</span>
+            </div>
+
+            <div className="resume-card-content">
+              <div className="resume-card-bio">
+                <span className="resume-card-role">Full-Stack Engineer &amp; Security Researcher</span>
+                <h3>HENG BUNKHEANG</h3>
+                <p>
+                  Builder with dual bachelor’s degrees in Computer Science and IT Management. Experienced in production web systems (Save the Children, SanSom, REELTIME Media), AI systems, and international cybersecurity competition research.
+                </p>
+
+                <div className="resume-highlights-grid">
+                  <div className="resume-highlight-item">
+                    <span className="highlight-tag">01 / DEGREES</span>
+                    <strong>FHSU &amp; AUPP Dual B.S.</strong>
+                    <small>CS + IT Management</small>
+                  </div>
+                  <div className="resume-highlight-item">
+                    <span className="highlight-tag">02 / CYBERSECURITY</span>
+                    <strong>ASEAN Cyber Shield 2024</strong>
+                    <small>Selected Top 14 of 300</small>
+                  </div>
+                  <div className="resume-highlight-item">
+                    <span className="highlight-tag">03 / FREELANCE</span>
+                    <strong>SanSom &amp; REELTIME Media</strong>
+                    <small>Loan Engine &amp; Media Apps</small>
+                  </div>
+                  <div className="resume-highlight-item">
+                    <span className="highlight-tag">04 / ALGO TRADING</span>
+                    <strong>Ben10-Fx &amp; SuperFx</strong>
+                    <small>MQL5, Python, MT5 Automation</small>
+                  </div>
+                </div>
+              </div>
+
+              <div className="resume-card-action-box">
+                <div className="resume-badge-preview">
+                  <span className="preview-label">DEDICATED PAGE</span>
+                  <h4>Interactive CV &amp; Document Viewer</h4>
+                  <p>Includes complete timeline, skills taxonomy, hackathon awards, leadership experience, and print-ready formatting.</p>
+                </div>
+                <div className="resume-card-cta-group">
+                  <a className="button button-dark resume-main-redirect-btn" href="/resume/">
+                    View Full Resume Page <Arrow diagonal />
+                  </a>
+                  <div className="resume-secondary-btns">
+                    <a className="button button-outline" href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">
+                      Download PDF ↓
+                    </a>
+                    <RecruiterDossierBtn />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* VERIFIED CREDENTIALS SECTION */}
@@ -348,7 +509,7 @@ export default function App() {
             <a href={githubStats.profile} target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
             <a href="mailto:bunkheangheng99@gmail.com">Email <Arrow diagonal /></a>
             <a href="tel:+855973556059">097-355-6059 <Arrow diagonal /></a>
-            <a href="#resume">Resume <Arrow diagonal /></a>
+            <a href="/resume/">Resume <Arrow diagonal /></a>
             <a href="#credentials">Credentials <Arrow diagonal /></a>
             <a href={resumeUrl} download="Bun-Kheang-Heng-Resume.pdf">Resume PDF ↓</a>
             <a href="/trading/">Trading world <Arrow diagonal /></a>
